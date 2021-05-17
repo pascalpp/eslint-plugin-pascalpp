@@ -13,7 +13,7 @@ const type = 'FunctionDeclaration';
 //------------------------------------------------------------------------------
 
 const { RuleTester } = require('eslint');
-const rule = require('../../../lib/rules/unwrap-function-props');
+const rule = require('../../../lib/rules/unwrap-function-arguments');
 
 //------------------------------------------------------------------------------
 // Tests
@@ -28,13 +28,13 @@ function Component() {
 valid.push({ code: validNoProps });
 
 const validShortProps = `
-function Component({ one, two, three }) {
+function Component(one, two, three) {
   // function body
 }`;
 valid.push({ code: validShortProps, parser });
 
 const validLongPropsWrapped = `
-function MyLongComponent({
+function MyLongComponent(
   one,
   two,
   three,
@@ -45,34 +45,35 @@ function MyLongComponent({
   eight,
   nine,
   ten
-}) {
+) {
   // function body
 }`;
 valid.push({ code: validLongPropsWrapped, parser });
 
 const validAlmostWouldFit = `
-function MyShortComponent({
+function MyShortComponent(
   one,
-  two
-}) {
+  two,
+  three
+) {
   // props could almost fit one on line
 }`;
-const validAlmostWouldFitOptions = [{ maxLength: 40 }];
+const validAlmostWouldFitOptions = [{ maxLength: 43 }];
 valid.push({ code: validAlmostWouldFit, options: validAlmostWouldFitOptions, parser });
 
 
 const invalid = [];
 
 const invalidShortPropsWrapped = `
-function MyShortComponent({
+function MyShortComponent(
   one,
   two,
   three
-}) {
+) {
   // props could fit one on line
 }`;
 const invalidShortPropsWrappedOutput = `
-function MyShortComponent({ one, two, three }) {
+function MyShortComponent(one, two, three) {
   // props could fit one on line
 }`;
 invalid.push({
@@ -89,4 +90,4 @@ invalid.push({
 
 
 const ruleTester = new RuleTester();
-ruleTester.run('unwrap-function-props', rule, { valid, invalid });
+ruleTester.run('unwrap-function-arguments', rule, { valid, invalid });
