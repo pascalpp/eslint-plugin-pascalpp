@@ -51,7 +51,7 @@ function Component() {
     <TestComponent {...props}/>
   )
 }`;
-valid.push({ code: validSimpleSpread , parser });
+valid.push({ code: validSimpleSpread, parser });
 
 const validShorterMaxLength = `
 function Component() {
@@ -99,6 +99,14 @@ function Component() {
   )
 }`;
 valid.push({ code: validTooLongToUnwwap, parser });
+
+const validCompoundName = `
+function Component() {
+  return (
+    <Test.Component foo bar baz/>
+  )
+}`;
+valid.push({ code: validCompoundName, parser });
 
 
 //------------------------------------------------------------------------------
@@ -183,6 +191,34 @@ invalid.push({
   errors: [
     {
       message: 'Element TestComponent can fit on one line.',
+      type,
+    },
+  ],
+  parser,
+});
+
+const invalidCompoundName = `
+function Component() {
+  return (
+    <Test.Component
+      foo
+      bar
+      baz
+    />
+  )
+}`;
+const invalidCompoundNameOutput = `
+function Component() {
+  return (
+    <Test.Component foo bar baz/>
+  )
+}`;
+invalid.push({
+  code:   invalidCompoundName,
+  output: invalidCompoundNameOutput,
+  errors: [
+    {
+      message: 'Element Test.Component can fit on one line.',
       type,
     },
   ],

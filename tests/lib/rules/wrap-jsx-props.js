@@ -78,6 +78,15 @@ function Component() {
 }`;
 valid.push({ code: validAlreadyWrapped, parser });
 
+const validCompoundName = `
+function Component() {
+  return (
+    <Test.Component foo bar baz/>
+  )
+}`;
+valid.push({ code: validCompoundName, parser });
+
+
 
 //------------------------------------------------------------------------------
 // Invalid Tests
@@ -237,6 +246,47 @@ invalid.push({
   ],
   parser,
 });
+
+const invalidCompoundName = `
+function Component() {
+  return (
+    <Test.Component foo bar baz bing bang bong boop bop trip trap trop zip zap zig zag/>
+  )
+}`;
+const invalidCompoundNameOutput = `
+function Component() {
+  return (
+    <Test.Component
+      foo
+      bar
+      baz
+      bing
+      bang
+      bong
+      boop
+      bop
+      trip
+      trap
+      trop
+      zip
+      zap
+      zig
+      zag
+    />
+  )
+}`;
+invalid.push({
+  code:   invalidCompoundName,
+  output: invalidCompoundNameOutput,
+  errors: [
+    {
+      message: 'Element Test.Component has a length of 88. Maximum allowed is 80',
+      type,
+    },
+  ],
+  parser,
+});
+
 
 
 //------------------------------------------------------------------------------
