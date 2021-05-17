@@ -1,3 +1,4 @@
 module.exports = {
-  reporter: 'min'
+  reporter: 'min',
+  spec: 'tests/**/*.js'
 }
