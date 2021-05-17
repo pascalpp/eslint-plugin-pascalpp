@@ -11,6 +11,7 @@
     "jsx"
   ],
   "author": "Pascal Balthrop",
+  "homepage": "https://github.com/pascalpp/eslint-plugin-wrap-props",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha tests --recursive"
