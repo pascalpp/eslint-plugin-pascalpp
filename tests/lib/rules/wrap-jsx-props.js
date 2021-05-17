@@ -37,6 +37,22 @@ function Component() {
 }`;
 valid.push({ code: validShortProps, parser });
 
+const validShortSpread = `
+function Component() {
+  return (
+    <TestComponent {...{ foo, bar, baz }}/>
+  )
+}`;
+valid.push({ code: validShortSpread, parser });
+
+const validSimpleSpread = `
+function Component() {
+  return (
+    <TestComponent {...props}/>
+  )
+}`;
+valid.push({ code: validSimpleSpread, parser });
+
 const validLargerMaxLength = `
 function Component() {
   return (
@@ -85,6 +101,25 @@ function Component() {
   )
 }`;
 valid.push({ code: validCompoundName, parser });
+
+const validClassComponent = `
+class ClassComponent extends React.PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { one, two, three, four, five, six } = this.props;
+    return (
+      <>
+        {one === two && (<Some.Helper {...three}/>)}
+        {four === five && (<Other.Helper {...six}/>)}
+      </>
+    );
+  }
+}
+`;
+valid.push({ code: validClassComponent, parser });
 
 
 
@@ -201,6 +236,40 @@ invalid.push({
   errors: [
     {
       message: 'Element TestComponent has a length of 85. Maximum allowed is 80',
+      type,
+    },
+  ],
+  parser,
+});
+
+const invalidMultiplePropsWithSimpleSpread = `
+function Component() {
+  return (
+    <TestComponent foo bar baz={bang} zig zag zip zap zop {...reallyLongSimpleSpread }/>
+  )
+}`;
+const invalidMultiplePropsWithSimpleSpreadOutput = `
+function Component() {
+  return (
+    <TestComponent
+      foo
+      bar
+      baz={bang}
+      zig
+      zag
+      zip
+      zap
+      zop
+      {...reallyLongSimpleSpread }
+    />
+  )
+}`;
+invalid.push({
+  code:   invalidMultiplePropsWithSimpleSpread,
+  output: invalidMultiplePropsWithSimpleSpreadOutput,
+  errors: [
+    {
+      message: 'Element TestComponent has a length of 88. Maximum allowed is 80',
       type,
     },
   ],
@@ -324,6 +393,56 @@ invalid.push({
   errors: [
     {
       message: 'Element TestComponent has a length of 130. Maximum allowed is 80',
+      type,
+    },
+  ],
+  parser,
+});
+
+const invalidClassComponent = `
+class ClassComponent extends React.PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { one, two, three, four, five, six } = this.props;
+    return (
+      <>
+        {one === two && (<Some.Helper {...three}/>)}
+        {four === five && (<Other.Helper {...six}/>)}
+      </>
+    );
+  }
+}
+`;
+const invalidClassComponentOutput = `
+class ClassComponent extends React.PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { one, two, three, four, five, six } = this.props;
+    return (
+      <>
+        {one === two && (<Some.Helper {...three}/>)}
+        {four === five && (<Other.Helper
+                             {...six}
+                           />)}
+      </>
+    );
+  }
+}
+`;
+const invalidClassComponentOptions = [{ maxLength: 50 }];
+invalid.push({
+  code:    invalidClassComponent,
+  output:  invalidClassComponentOutput,
+  options: invalidClassComponentOptions,
+  errors:  [
+    {
+      message: 'Element Other.Helper has a length of 51. Maximum allowed is 50',
       type,
     },
   ],
