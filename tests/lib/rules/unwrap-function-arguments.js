@@ -93,6 +93,57 @@ invalid.push({
 });
 
 
+const invalidShortNested = `
+function MyComponent() {
+  function MyNestedComponent(
+    one,
+    two,
+    three
+  ) {
+    // props could fit one on line
+  }
+}`;
+const invalidShortNestedOutput = `
+function MyComponent() {
+  function MyNestedComponent(one, two, three) {
+    // props could fit one on line
+  }
+}`;
+invalid.push({
+  code:   invalidShortNested,
+  output: invalidShortNestedOutput,
+  errors: [
+    {
+      message: 'Declaration for MyNestedComponent can fit on one line.',
+      type,
+    },
+  ],
+  parser,
+});
+
+
+const invalidClosingParenOnNewLine = `
+function shortCall(one, two, three,
+  ) {
+  // paren should be moved up to first line
+}`;
+const invalidClosingParenOnNewLineOutput = `
+function shortCall(one, two, three) {
+  // paren should be moved up to first line
+}`;
+invalid.push({
+  code:   invalidClosingParenOnNewLine,
+  output: invalidClosingParenOnNewLineOutput,
+  errors: [
+    {
+      message: 'Declaration for shortCall can fit on one line.',
+      type,
+    },
+  ],
+  parser,
+});
+
+
 //------------------------------------------------------------------------------
 // Run Tests
 //------------------------------------------------------------------------------
