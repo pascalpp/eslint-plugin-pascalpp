@@ -37,6 +37,22 @@ function Component() {
 }`;
 valid.push({ code: validShortProps, parser });
 
+const validShortSpread = `
+function Component() {
+  return (
+    <TestComponent {...{ foo, bar, baz }}/>
+  )
+}`;
+valid.push({ code: validShortSpread, parser });
+
+const validSimpleSpread = `
+function Component() {
+  return (
+    <TestComponent {...props}/>
+  )
+}`;
+valid.push({ code: validSimpleSpread , parser });
+
 const validShorterMaxLength = `
 function Component() {
   return (
@@ -138,6 +154,32 @@ function Component() {
 invalid.push({
   code:   invalidShortSpread,
   output: invalidShortSpreadOutput,
+  errors: [
+    {
+      message: 'Element TestComponent can fit on one line.',
+      type,
+    },
+  ],
+  parser,
+});
+
+const invalidSimpleSpread = `
+function Component() {
+  return (
+    <TestComponent
+      {...props}
+    />
+  )
+}`;
+const invalidSimpleSpreadOutput = `
+function Component() {
+  return (
+    <TestComponent {...props}/>
+  )
+}`;
+invalid.push({
+  code:   invalidSimpleSpread,
+  output: invalidSimpleSpreadOutput,
   errors: [
     {
       message: 'Element TestComponent can fit on one line.',
