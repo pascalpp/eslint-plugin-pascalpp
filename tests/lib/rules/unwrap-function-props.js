@@ -45,6 +45,15 @@ function MyLongComponent({
   // function body
 }`;
 
+const validAlmostWouldFit = `
+function MyShortComponent({
+  one,
+  two
+}) {
+  // props could almost fit one on line
+}`;
+const validAlmostWouldFitOptions = [{ maxLength: 40 }];
+
 
 const invalidShortPropsWrapped = `
 function MyShortComponent({
@@ -60,12 +69,14 @@ function MyShortComponent({ one, two, three }) {
 }`;
 
 
+
 const ruleTester = new RuleTester();
 ruleTester.run('unwrap-function-props', rule, {
   valid: [
     { code: validNoProps },
     { code: validShortProps, parser },
     { code: validLongPropsWrapped, parser },
+    { code: validAlmostWouldFit, options: validAlmostWouldFitOptions, parser },
   ],
 
   invalid: [
