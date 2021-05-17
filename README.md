@@ -35,10 +35,10 @@ Then configure the rules under the rules section.
 {
   "rules": {
     'wrap-props/wrap-function-props':       ['error'],
-    'wrap-props/wrap-function-arguments':   ['error']
-    'wrap-props/wrap-jsx-props':            ['error']
-    'wrap-props/unwrap-function-props':     ['error']
-    'wrap-props/unwrap-function-arguments': ['error']
+    'wrap-props/wrap-function-arguments':   ['error'],
+    'wrap-props/wrap-jsx-props':            ['error'],
+    'wrap-props/unwrap-function-props':     ['error'],
+    'wrap-props/unwrap-function-arguments': ['error'],
     'wrap-props/unwrap-jsx-props':          ['error']
   }
 }
