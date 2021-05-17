@@ -13,7 +13,7 @@ const type = 'FunctionDeclaration';
 //------------------------------------------------------------------------------
 
 const { RuleTester } = require('eslint');
-const rule = require('../../../lib/rules/function-arguments-max-len');
+const rule = require('../../../lib/rules/wrap-function-arguments');
 
 //------------------------------------------------------------------------------
 // Valid Tests
@@ -217,4 +217,4 @@ invalid.push({
 //------------------------------------------------------------------------------
 
 const ruleTester = new RuleTester();
-ruleTester.run('function-arguments-max-len', rule, { valid, invalid });
+ruleTester.run('wrap-function-arguments', rule, { valid, invalid });
