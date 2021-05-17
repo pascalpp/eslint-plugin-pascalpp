@@ -1,6 +1,6 @@
-# Unwrap function declarations with destructured props that are short enough to fit on one line (unwrap-function-props)
+# Unwrap function declarations with arguments that are short enough to fit on one line (unwrap-function-arguments)
 
-Companion to `wrap-function-props` which unwraps functions which can fit on one line.
+Companion to `wrap-function-arguments` which unwraps functions which can fit on one line.
 
 **Fixable:** This rule is automatically fixable using the `--fix` flag on the command line.
 
@@ -9,11 +9,11 @@ Companion to `wrap-function-props` which unwraps functions which can fit on one 
 Examples of **incorrect** code for this rule:
 
 ```js
-function MyShortComponent({
+function MyFewArguments(
   one,
   two,
   three
-}) {
+) {
   // function body here
 }
 ```
@@ -21,7 +21,7 @@ function MyShortComponent({
 Examples of **correct** code for this rule:
 
 ```js
-function MyShortComponent({ one, two, three }) {
+function MyFewArguments(one, two, three) {
   // function body here
 }
 ```
@@ -41,4 +41,4 @@ rules: {
 
 ## When Not To Use It
 
-When you don't use destructured props arguments or you don't care about line lengths.
+When you don't use `wrap-function-arguments` or you don't care about line lengths.

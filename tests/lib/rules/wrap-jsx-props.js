@@ -287,6 +287,49 @@ invalid.push({
   parser,
 });
 
+const invalidKitchenSink = `
+function Component() {
+  return (
+    <TestComponent {...{ foo, bar, baz, bing: bang, bong, boop, bop, trip, trap, trop, zip, zap, zig, zag }} {...props} external/>
+  )
+}`;
+const invalidKitchenSinkOutput = `
+function Component() {
+  return (
+    <TestComponent
+      {...{
+        foo,
+        bar,
+        baz,
+        bing: bang,
+        bong,
+        boop,
+        bop,
+        trip,
+        trap,
+        trop,
+        zip,
+        zap,
+        zig,
+        zag
+      }}
+      {...props}
+      external
+    />
+  )
+}`;
+invalid.push({
+  code:   invalidKitchenSink,
+  output: invalidKitchenSinkOutput,
+  errors: [
+    {
+      message: 'Element TestComponent has a length of 130. Maximum allowed is 80',
+      type,
+    },
+  ],
+  parser,
+});
+
 
 
 //------------------------------------------------------------------------------

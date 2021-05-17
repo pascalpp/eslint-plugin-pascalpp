@@ -1,4 +1,4 @@
-# ESLint rule to wrap function declarations that exceed a max length (function-props-max-len)
+# Wrap function declarations with destructured props that exceed a max length (wrap-function-props)
 
 When defining React components with a destructured props object as the sole argument, adding props can exceed a desired maximum line length. This rule reformats such function declarations to put each prop on its own line.
 
@@ -11,7 +11,7 @@ Examples of **incorrect** code for this rule:
 ```js
 function MyLongComponent({ one, two, three, four, five, six, seven, eight, nine, ten }) {
   // function body here
-}`;
+}
 ```
 
 Examples of **correct** code for this rule:
@@ -30,17 +30,17 @@ function MyLongComponent({
   ten
 }) {
   // function body here
-}`;
+}
 ```
 
 ### Usage
 
 ```
 plugins: [
-  'pascalpp'
+  'wrap-props'
 ],
 rules: {
-  'pascalpp/function-props-max-len': ['error', {
+  'wrap-props/wrap-function-props': ['error', {
     maxLength: 80 (default),
     indent: 2 (default)
   }]

@@ -5,7 +5,10 @@
   "keywords": [
     "eslint",
     "eslintplugin",
-    "eslint-plugin"
+    "eslint-plugin",
+    "react",
+    "props",
+    "jsx"
   ],
   "author": "Pascal Balthrop",
   "main": "lib/index.js",
