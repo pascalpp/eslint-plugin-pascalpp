@@ -16,16 +16,15 @@ Next, install `eslint-plugin-pascalpp`:
 $ npm install eslint-plugin-pascalpp --save-dev
 ```
 
-
 ## Usage
 
 Add `pascalpp` to the plugins section of your `.eslintrc` configuration file. You can omit the `eslint-plugin-` prefix:
 
 ```json
 {
-    "plugins": [
-        "pascalpp"
-    ]
+  "plugins": [
+    "pascalpp"
+  ]
 }
 ```
 
