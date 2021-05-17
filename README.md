@@ -32,7 +32,7 @@ Add `pascalpp` to the plugins section of your `.eslintrc` configuration file. Yo
 
 Then configure the rule under the rules section.
 
-```json
+```
 {
   "rules": {
     'pascalpp/function-props-max-len': ['error', {
