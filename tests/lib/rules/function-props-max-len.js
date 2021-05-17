@@ -16,25 +16,37 @@ const { RuleTester } = require('eslint');
 const rule = require('../../../lib/rules/function-props-max-len');
 
 //------------------------------------------------------------------------------
-// Tests
+// Valid Tests
 //------------------------------------------------------------------------------
+
+const valid = [];
 
 const validNoProps = `
 function Component() {
   // function body
 }`;
+valid.push({ code: validNoProps });
 
 const validShortProps = `
 function Component({ one, two, three }) {
   // function body
 }`;
+valid.push({ code: validShortProps, parser });
 
 const validLargerMaxLength = `
 function MyLongComponent({ one, two, three, four, five, six, seven, eight, nine, ten }) {
   // props should not be wrapped on to separate lines because maxLength is larger
 }`;
-const validLargerMaxLengthOptions = [{ maxLength: 120 }]
+const validLargerMaxLengthOptions = [{ maxLength: 120 }];
+valid.push({ code: validLargerMaxLength, options: validLargerMaxLengthOptions, parser });
 
+
+
+//------------------------------------------------------------------------------
+// Invalid Tests
+//------------------------------------------------------------------------------
+
+const invalid = [];
 
 const invalidLongProps = `
 function MyLongComponent({ one, two, three, four, five, six, seven, eight, nine, ten }) {
@@ -55,6 +67,18 @@ function MyLongComponent({
 }) {
   // props should be wrapped on to separate lines
 }`;
+invalid.push({
+  code:   invalidLongProps,
+  output: invalidLongPropsOutput,
+  errors: [
+    {
+      message: 'Declaration for MyLongComponent has a length of 89. Maximum allowed is 80',
+      type,
+    },
+  ],
+  parser,
+});
+
 
 const invalidLongPropsNested = `
 function MyComponent() {
@@ -81,6 +105,18 @@ function MyComponent() {
     // function body
   }
 }`;
+invalid.push({
+  code:   invalidLongPropsNested,
+  output: invalidLongPropsNestedOutput,
+  errors: [
+    {
+      message: 'Declaration for MyNestedLongComponent has a length of 97. Maximum allowed is 80',
+      type,
+    },
+  ],
+  parser,
+});
+
 
 const invalidShortPropsNested = `
 function MyComponent() {
@@ -106,12 +142,24 @@ function MyComponent() {
     // function body
   }
 }`;
+invalid.push({
+  code:   invalidShortPropsNested,
+  output: invalidShortPropsNestedOutput,
+  errors: [
+    {
+      message: 'Declaration for MyNestedShortComponent has a length of 81. Maximum allowed is 80',
+      type,
+    },
+  ],
+  parser,
+});
+
 
 const invalidLowerMaxLength = `
 function MyShortComponent({ one, two, three }) {
   // props should be wrapped on to separate lines
 }`;
-const invalidLowerMaxLengthOptions = [{ maxLength: 40 }]
+const invalidLowerMaxLengthOptions = [{ maxLength: 40 }];
 const invalidLowerMaxLengthOutput = `
 function MyShortComponent({
   one,
@@ -120,12 +168,25 @@ function MyShortComponent({
 }) {
   // props should be wrapped on to separate lines
 }`;
+invalid.push({
+  code:    invalidLowerMaxLength,
+  options: invalidLowerMaxLengthOptions,
+  output:  invalidLowerMaxLengthOutput,
+  errors:  [
+    {
+      message: 'Declaration for MyShortComponent has a length of 48. Maximum allowed is 40',
+      type,
+    },
+  ],
+  parser,
+});
+
 
 const invalidLargerIndent = `
 function MyLongComponent({ one, two, three, four, five, six, seven, eight, nine, ten }) {
     // props should be wrapped on to separate lines
 }`;
-const invalidLargerIndentOptions = [{ indent: 4 }]
+const invalidLargerIndentOptions = [{ indent: 4 }];
 const invalidLargerIndentOutput = `
 function MyLongComponent({
     one,
@@ -141,73 +202,23 @@ function MyLongComponent({
 }) {
     // props should be wrapped on to separate lines
 }`;
+invalid.push({
+  code:    invalidLargerIndent,
+  options: invalidLargerIndentOptions,
+  output:  invalidLargerIndentOutput,
+  errors:  [
+    {
+      message: 'Declaration for MyLongComponent has a length of 89. Maximum allowed is 80',
+      type,
+    },
+  ],
+  parser,
+});
 
+
+//------------------------------------------------------------------------------
+// Run Tests
+//------------------------------------------------------------------------------
 
 const ruleTester = new RuleTester();
-ruleTester.run('function-props-max-len', rule, {
-  valid: [
-    { code: validNoProps },
-    { code: validShortProps, parser },
-    { code: validLargerMaxLength, options: validLargerMaxLengthOptions, parser },
-  ],
-
-  invalid: [
-    {
-      code: invalidLongProps,
-      output: invalidLongPropsOutput,
-      errors: [
-        {
-          message: 'Declaration for MyLongComponent has a length of 89. Maximum allowed is 80',
-          type,
-        },
-      ],
-      parser,
-    },
-    {
-      code: invalidLongPropsNested,
-      output: invalidLongPropsNestedOutput,
-      errors: [
-        {
-          message: 'Declaration for MyNestedLongComponent has a length of 97. Maximum allowed is 80',
-          type,
-        },
-      ],
-      parser,
-    },
-    {
-      code: invalidShortPropsNested,
-      output: invalidShortPropsNestedOutput,
-      errors: [
-        {
-          message: 'Declaration for MyNestedShortComponent has a length of 81. Maximum allowed is 80',
-          type,
-        },
-      ],
-      parser,
-    },
-    {
-      code: invalidLowerMaxLength,
-      options: invalidLowerMaxLengthOptions,
-      output: invalidLowerMaxLengthOutput,
-      errors: [
-        {
-          message: 'Declaration for MyShortComponent has a length of 48. Maximum allowed is 40',
-          type,
-        },
-      ],
-      parser,
-    },
-    {
-      code: invalidLargerIndent,
-      options: invalidLargerIndentOptions,
-      output: invalidLargerIndentOutput,
-      errors: [
-        {
-          message: 'Declaration for MyLongComponent has a length of 89. Maximum allowed is 80',
-          type,
-        },
-      ],
-      parser,
-    },
-  ],
-});
+ruleTester.run('function-props-max-len', rule, { valid, invalid });

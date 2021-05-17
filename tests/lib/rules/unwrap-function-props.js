@@ -16,7 +16,7 @@ const { RuleTester } = require('eslint');
 const rule = require('../../../lib/rules/unwrap-function-props');
 
 //------------------------------------------------------------------------------
-// Tests
+// Valid Tests
 //------------------------------------------------------------------------------
 
 const valid = [];
@@ -61,6 +61,10 @@ const validAlmostWouldFitOptions = [{ maxLength: 40 }];
 valid.push({ code: validAlmostWouldFit, options: validAlmostWouldFitOptions, parser });
 
 
+//------------------------------------------------------------------------------
+// Invalid Tests
+//------------------------------------------------------------------------------
+
 const invalid = [];
 
 const invalidShortPropsWrapped = `
@@ -87,6 +91,10 @@ invalid.push({
   parser,
 });
 
+
+//------------------------------------------------------------------------------
+// Run Tests
+//------------------------------------------------------------------------------
 
 const ruleTester = new RuleTester();
 ruleTester.run('unwrap-function-props', rule, { valid, invalid });
