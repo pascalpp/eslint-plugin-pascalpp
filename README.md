@@ -1,4 +1,4 @@
-# eslint-plugin-pascalpp
+# eslint-plugin-wrap-props
 
 ESLint rule to wrap function declarations that exceed a max length
 
@@ -23,7 +23,7 @@ Add `pascalpp` to the plugins section of your `.eslintrc` configuration file. Yo
 ```json
 {
   "plugins": [
-    "pascalpp"
+    "wrap-props"
   ]
 }
 ```
@@ -34,7 +34,7 @@ Then configure the rule under the rules section.
 ```
 {
   "rules": {
-    'pascalpp/function-props-max-len': ['error', {
+    'wrap-props/wrap-function-props': ['error', {
       maxLength: <integer> (default: 80),
       indent:    <integer> (default: 2)
     }]
