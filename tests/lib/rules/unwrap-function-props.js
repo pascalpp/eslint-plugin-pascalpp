@@ -60,6 +60,16 @@ function MyShortComponent({
 const validAlmostWouldFitOptions = [{ maxLength: 40 }];
 valid.push({ code: validAlmostWouldFit, options: validAlmostWouldFitOptions, parser });
 
+const validWithCommentsMixedIn = `
+function loadNextPage({
+  // comment1
+  param1,
+  // comment2,
+  param2
+}) {
+  // function body
+}`;
+valid.push({ code: validWithCommentsMixedIn, parser });
 
 //------------------------------------------------------------------------------
 // Invalid Tests
