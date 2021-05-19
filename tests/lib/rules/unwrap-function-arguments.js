@@ -61,6 +61,17 @@ function MyShortComponent(
 const validAlmostWouldFitOptions = [{ maxLength: 43 }];
 valid.push({ code: validAlmostWouldFit, options: validAlmostWouldFitOptions, parser });
 
+const validWithInlineComments = `
+function loadNextPage(
+  // comment1
+  param1,
+  // comment2,
+  param2
+) {
+  // function body
+}`;
+valid.push({ code: validWithInlineComments, parser });
+
 
 //------------------------------------------------------------------------------
 // Invalid Tests
