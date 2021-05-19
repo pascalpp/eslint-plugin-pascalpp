@@ -60,7 +60,7 @@ function MyShortComponent({
 const validAlmostWouldFitOptions = [{ maxLength: 40 }];
 valid.push({ code: validAlmostWouldFit, options: validAlmostWouldFitOptions, parser });
 
-const validWithCommentsMixedIn = `
+const validWithInlineComments = `
 function loadNextPage({
   // comment1
   param1,
@@ -69,7 +69,7 @@ function loadNextPage({
 }) {
   // function body
 }`;
-valid.push({ code: validWithCommentsMixedIn, parser });
+valid.push({ code: validWithInlineComments, parser });
 
 //------------------------------------------------------------------------------
 // Invalid Tests
