@@ -16,10 +16,8 @@ module.exports = {
   },
   rules: {
     'array-bracket-spacing':   [ 'error', 'always', { objectsInArrays: false }],
-    'brace-style':             [ 'error' ],
     'comma-dangle':            [ 'error', 'always-multiline' ],
     'comma-spacing':           [ 'error', { before: false, after: true }],
-    'curly':                   [ 'error' ],
     'indent':                  [ 'error', 2, { ignoredNodes: [ 'TemplateLiteral' ], SwitchCase: 1 }],
     'key-spacing':             [ 'error', { beforeColon: false, afterColon: true, mode: 'strict', align: 'value' }],
     'no-console':              [ 'error', { allow: [ 'warn', 'error' ] }],
